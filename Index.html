@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>С 8 Марта!</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Добавим стили для скрытия/показа сюрприза */
+        .surprise {
+            display: none;
+        }
+        
+        .surprise.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>💐 С 8 Марта! 💐</h1>
+    <p>Спасибо за заботу, любовь и поддержку</p>
+</header>
+
+<section class="gallery">
+    <img src="Flowers.png" alt="Цветы">
+</section>
+
+<section class="cards">
+    <div class="card" onclick="showPersonalWish('mom')">
+        <h3>Мама</h3>
+        <p>Ты всегда рядом ❤️</p>
+    </div>
+
+    <div class="card" onclick="showPersonalWish('sister')">
+        <h3>Сестра</h3>
+        <p>Ты моя лучшая подруга 🌸</p>
+    </div>
+</section>
+
+<button class="surprise-btn" onclick="showSurprise()">Открыть сюрприз</button>
+
+<div class="surprise" id="surpriseMessage">
+    🌷 Ты самая лучшая! 🌷
+</div>
+
+<script>
+    function showSurprise() {
+        const surprise = document.getElementById('surpriseMessage');
+        
+        // Добавляем класс для показа
+        surprise.classList.add('show');
+        
+        // Изменяем текст на разные поздравления
+        const wishes = [
+            '🌷 С 8 Марта! Пусть каждый день дарит радость! 🌷',
+            '🌸 Будь счастлива, любима и прекрасна! 🌸',
+            '🌺 Пусть исполняются самые заветные мечты! 🌺',
+            '💐 Ты заслуживаешь самого лучшего! 💐',
+            '🌹 Оставайся такой же удивительной! 🌹'
+        ];
+        
+        const randomWish = wishes[Math.floor(Math.random() * wishes.length)];
+        surprise.innerHTML = randomWish;
+        
+        // Добавляем эффект с конфетти
+        createConfetti();
+        
+        // Автоматически скрываем через 5 секунд
+        setTimeout(function() {
+            surprise.classList.remove('show');
+        }, 5000);
+    }
+    
+    // Функция для персональных поздравлений при клике на карточки
+    function showPersonalWish(person) {
+        const surprise = document.getElementById('surpriseMessage');
+        surprise.classList.add('show');
+        
+        if (person === 'mom') {
+            surprise.innerHTML = '❤️ Мамочка, спасибо за твою бесконечную любовь и заботу! Ты мой ангел-хранитель! ❤️';
+        } else if (person === 'sister') {
+            surprise.innerHTML = '🌸 Сестренка, спасибо, что ты есть! Ты делаешь мою жизнь ярче и веселее! 🌸';
+        }
+        
+        // Добавляем конфетти
+        createConfetti();
+        
+        setTimeout(function() {
+            surprise.classList.remove('show');
+        }, 5000);
+    }
+    
+    // Функция для создания простого эффекта конфетти
+    function createConfetti() {
+        for (let i = 0; i < 50; i++) {
+            const confetti = document.createElement('div');
+            confetti.style.position = 'fixed';
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.top = -20 + 'px';
+            confetti.style.width = '10px';
+            confetti.style.height = '10px';
+            confetti.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+            confetti.style.borderRadius = '50%';
+            confetti.style.pointerEvents = 'none';
+            confetti.style.zIndex = '9999';
+            confetti.style.animation = `fall ${Math.random() * 3 + 2}s linear`;
+            
+            document.body.appendChild(confetti);
+            
+            // Удаляем конфетти после анимации
+            setTimeout(() => {
+                confetti.remove();
+            }, 5000);
+        }
+    }
+    
+    // Добавляем стили для анимации падения конфетти
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+    `;
+    document.head.appendChild(style);
+</script>
+
+</body>
+</html>
